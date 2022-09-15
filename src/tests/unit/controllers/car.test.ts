@@ -15,13 +15,15 @@ describe('Car Controller', () => {
 
   const req = {} as Request;
   const res = {} as Response;
-  beforeEach(() => {
+  before(() => {
     sinon.stub(carService, 'create').resolves(carMockWithId);
+    sinon.stub(carService, 'read').resolves([carMockWithId]);
+
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
   });
 
-  afterEach(() => {
+  after(() => {
     sinon.restore();
   });
   
@@ -30,7 +32,7 @@ describe('Car Controller', () => {
     it('should return status 201', async () => {
       req.body = carMock;
 
-      const result = await carController.create(req, res);
+      await carController.create(req, res);
 
       expect((res.status as sinon.SinonStub).calledWith(StatusCodes.CREATED)).to.be.true;
     });
@@ -38,9 +40,23 @@ describe('Car Controller', () => {
     it('should return a body with the new car', async () => {
       req.body = carMock;
 
-      const result = await carController.create(req, res);
+      await carController.create(req, res);
 
       expect((res.json as sinon.SinonStub).calledWith(carMockWithId)).to.be.true;
+    });
+  });
+
+  describe('When trying to get all cars,', () => {
+    it ('should return status 200', async () => {
+      await carController.read(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(StatusCodes.OK)).to.be.true;
+    });
+
+    it('should return a body with a list of all cars', async () => {
+      await carController.read(req, res);
+
+      expect((res.json as sinon.SinonStub).calledWith([carMockWithId])).to.be.true;
     });
   });
 });
