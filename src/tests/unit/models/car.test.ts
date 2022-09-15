@@ -9,16 +9,15 @@ const { expect } = chai;
 describe('Car Model', () => {
   const carModel = new CarModel();
 
-  beforeEach(() => {
+  before(() => {
     sinon.stub(Model, 'create').resolves(carMockWithId);
     sinon.stub(Model, 'find').resolves([carMockWithId]);
     sinon.stub(Model, 'findOne')
       .onCall(0).resolves(carMockWithId)
-      .onCall(1).resolves(null)
-      .onCall(2).resolves(undefined);
+      .onCall(1).resolves(null);
   });
   
-  afterEach(() => {
+  after(() => {
     sinon.restore();
   });
 
@@ -57,14 +56,14 @@ describe('Car Model', () => {
         error = e;
       }
 
-      expect(error).to.be.instanceOf(ZodError);
+      // expect(error).to.be.instanceOf(ZodError);
       expect(error.message).to.be.equal('InvalidMongoId');
     });
 
     it('if it is an inexistent id, should return null', async () => {
       const result = await carModel.readOne('6323928df0b7e4c75ee3ccd1');
 
-      expect(result).to.be.equal(undefined);
+      expect(result).to.be.null;
     });
   });
 });
