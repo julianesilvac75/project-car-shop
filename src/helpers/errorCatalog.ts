@@ -1,7 +1,7 @@
 // REFERENCIA: conteudo do course da Trybe do bloco 30
 
 enum ErrorTypes {
-  EntityNotFound = 'ObjectNotFound',
+  EntityNotFound = 'EntityNotFound',
   InvalidMongoId = 'InvalidMongoId',
 }
 
@@ -15,7 +15,7 @@ type ErrorCatalog = {
 };
 
 const errorCatalog: ErrorCatalog = {
-  ObjectNotFound: {
+  EntityNotFound: {
     message: 'Object not found',
     httpStatus: 404,
   },

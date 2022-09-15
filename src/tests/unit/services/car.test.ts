@@ -66,7 +66,7 @@ describe('Car Service', () => {
         error = e;
       }
 
-      expect(error.message).to.be.equal('ObjectNotFound');
+      expect(error.message).to.be.equal('EntityNotFound');
     })
   });
 });
