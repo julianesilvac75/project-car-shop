@@ -13,7 +13,7 @@ describe('Car Model', () => {
   });
   
   afterEach(() => {
-
+    sinon.restore();
   });
 
   describe('When trying to create a car,', () => {
@@ -21,7 +21,7 @@ describe('Car Model', () => {
     it('should return a new car', async () => {
       const result = await carModel.create(carMock);
 
-      chai.expect(result).to.be.deep.equal(carMockWithId);
+      expect(result).to.be.deep.equal(carMockWithId);
     });
   });
 });
