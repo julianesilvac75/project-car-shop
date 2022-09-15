@@ -11,8 +11,6 @@ class CarController {
   }
 
   public async create(req: Request, res: Response<ICar>) {
-    console.log(req.body);
-    
     const {
       model, year, color, status, buyValue, doorsQty, seatsQty,
     } = req.body;
