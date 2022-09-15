@@ -9,7 +9,7 @@ const carMock: ICar = {
     seatsQty: 2,
 };
 
-const carMockWithId: ICar & { _id: String } = {
+const carMockWithId: ICar & { _id: string } = {
   _id: '6323928df0b7e4c75ee3ccd0',
   model: 'Ferrari Maranello',
   year: 1963,
