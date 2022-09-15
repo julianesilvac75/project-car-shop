@@ -12,11 +12,41 @@ class CarService implements IService<ICar> {
   public async create(obj: unknown): Promise<ICar> {
     const parsedObj = CarZodSchema.safeParse(obj);
 
-    if (!parsedObj.success) {
-      throw parsedObj.error;
-    }
+    if (!parsedObj.success) throw parsedObj.error;
 
     return this._carModel.create(parsedObj.data);
+  }
+
+  public async read(): Promise<ICar[]> {
+    return this._carModel.read();
+  }
+
+  public async readOne(_id: string): Promise<ICar> {
+    const car = await this._carModel.readOne(_id);
+
+    if (!car) throw new Error('elemento nao encontrado');
+
+    return car;
+  }
+
+  public async update(_id: string, obj: unknown): Promise<ICar> {
+    const parsedObj = CarZodSchema.safeParse(obj);
+
+    if (!parsedObj.success) throw parsedObj.error;
+
+    const updated = await this._carModel.update(_id, parsedObj.data);
+
+    if (!updated) throw new Error('Erro desconhecido');
+
+    return updated;
+  }
+
+  public async delete(_id: string): Promise<ICar> {
+    const deleted = await this._carModel.delete(_id);
+
+    if (!deleted) throw new Error('elemento nao encontrado');
+
+    return deleted;
   }
 }
 

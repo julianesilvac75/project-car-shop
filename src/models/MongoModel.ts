@@ -17,13 +17,13 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async readOne(_id: string): Promise<T | null> {
-    if (!isValidObjectId(_id)) throw Error('Erro de id invalid');
-    
+    if (!isValidObjectId(_id)) throw new Error('Erro de id invalid');
+
     return this._model.findOne({ _id });
   }
 
   public async update(_id: string, obj: T): Promise<T | null> {
-    if (!isValidObjectId(_id)) throw Error('Erro de id invalido');
+    if (!isValidObjectId(_id)) throw new Error('Erro de id invalido');
 
     return this._model.findByIdAndUpdate(
       { _id },
@@ -33,7 +33,7 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async delete(_id: string): Promise<T | null> {
-    if (!isValidObjectId(_id)) throw Error('Erro de id invalido');
+    if (!isValidObjectId(_id)) throw new Error('Erro de id invalido');
     
     return this._model.findByIdAndRemove({ _id });
   }
