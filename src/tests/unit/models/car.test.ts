@@ -56,7 +56,6 @@ describe('Car Model', () => {
         error = e;
       }
 
-      // expect(error).to.be.instanceOf(ZodError);
       expect(error.message).to.be.equal('InvalidMongoId');
     });
 

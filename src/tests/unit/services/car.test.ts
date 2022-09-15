@@ -13,6 +13,9 @@ describe('Car Service', () => {
   before(() => {
     sinon.stub(carModel, 'create').resolves(carMockWithId);
     sinon.stub(carModel, 'read').resolves([carMockWithId]);
+    sinon.stub(carModel, 'readOne')
+      .onCall(0).resolves(carMockWithId)
+      .onCall(1).resolves(null);
   });
 
   after(() => {
@@ -46,4 +49,24 @@ describe('Car Service', () => {
       expect(result).to.be.deep.equal([carMockWithId]);
     });
   });
-})
+
+  describe('When trying to get one car by the id,', () => {
+    it('if it is an existent id, should return the car', async () => {
+      const result = await carService.readOne(carMockWithId._id);
+
+      expect(result).to.be.deep.equal(carMockWithId);
+    });
+
+    it('if it is an inexistent id, should throw an error', async () => {
+      let error;
+
+      try {
+        await carService.readOne('6323928df0b7e4c75ee3ccd1');
+      } catch (e: any) {
+        error = e;
+      }
+
+      expect(error.message).to.be.equal('ObjectNotFound');
+    })
+  });
+});
