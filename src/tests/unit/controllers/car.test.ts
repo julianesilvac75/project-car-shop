@@ -80,12 +80,14 @@ describe('Car Controller', () => {
     });
 
     it ('should return status 200', async () => {
+      req.params = { id: carMockWithId._id };
       await carController.readOne(req, res);
 
       expect((res.status as sinon.SinonStub).calledWith(StatusCodes.OK)).to.be.true;
     });
 
     it('should return a body with the car', async () => {
+      req.params = { id: carMockWithId._id };
       await carController.readOne(req, res);
 
       expect((res.json as sinon.SinonStub).calledWith(carMockWithId)).to.be.true;
