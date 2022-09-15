@@ -12,6 +12,7 @@ describe('Car Service', () => {
 
   before(() => {
     sinon.stub(carModel, 'create').resolves(carMockWithId);
+    sinon.stub(carModel, 'read').resolves([carMockWithId]);
   });
 
   after(() => {
@@ -35,6 +36,14 @@ describe('Car Service', () => {
       }
 
       expect(error).to.be.instanceOf(Error);
+    });
+  });
+
+  describe('When trying to get all cars,', () => {
+    it('should return all cars', async () => {
+      const result = await carService.read();
+
+      expect(result).to.be.deep.equal([carMockWithId]);
     });
   });
 })
